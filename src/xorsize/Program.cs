@@ -43,7 +43,8 @@ if(settings.dumpSerializedCsv){
 
 if(settings.dumpFinalHealthData.show){
     Console.WriteLine("All your helth are belong to us:");
-    foreach(var h in HealthCsv.Sanitize(healthData.Value.Take(10))){
+    var data = settings.dumpFinalHealthData.truncate ? healthData.Value.Take(10) : healthData.Value;
+    foreach(var h in HealthCsv.Sanitize(data).OrderBy(x => x.Name)){
         Console.WriteLine("\t{0}", System.Text.Json.JsonSerializer.Serialize(h));
     }
 
